@@ -113,21 +113,4 @@ namespace geo {
 	  return r_val;
   }
 
-  int GCJ2GPS(double gcj_lat, double gcj_lng, double *wg_lat, double *wg_lng) {
-	  *wg_lat = 0;
-	  *wg_lng = 0;
-	  double wg84_lat = 0;
-	  double wg84_lng = 0;
-	  int r_val = -1;
-	  r_val = GCJ_to_GPS(gcj_lng, gcj_lat, wg84_lng, wg84_lat);
-	  if(r_val==0) {
-		  r_val = 1;
-		  *wg_lat = wg84_lat;
-		  *wg_lng = wg84_lng;
-	  } else {
-		  r_val = 0;
-	  }
-	  return r_val; 
-  }
-
 };
