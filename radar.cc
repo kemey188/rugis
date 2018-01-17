@@ -356,12 +356,6 @@ int density_peak_filter(DPointVec& points, double threshold, double dc) {
     for(dpit it = points.begin(); it != points.end(); ++it) {
         double d = Distance(*it, cent);
         it->is_noise = d > threshold;
-        //if (d > threshold) {
-        //    it = points.erase(it);
-        //} else {
-            // printf("d=%.5f,%.5f - %.5f,%.5f -> %g, %g\n", lat, lng, it->lat, it->lng, d, threshold);
-        //    ++ it;
-        //}
     }
     return points.size();
 }
@@ -412,7 +406,6 @@ void construct_density_map(DPointVec& points,
             }
             // std::cout<<*nb_it<<std::endl;
         }
-        // printf("count = %d, %d\n", it->second, count);
         density_map[it->first] = count;
     } 
 }
