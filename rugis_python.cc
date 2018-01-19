@@ -250,25 +250,10 @@ static PyObject *PyGPS2GCJ(PyObject *self, PyObject *args) {
   return list;
 }
 
-// lukaimin
-static PyObject *PyGCJ2GPS(PyObject *self, PyObject *args) {
-  (void)self;
-  double lat, lng;
-  if (!PyArg_ParseTuple(args, "dd", &lat, &lng)) {
-    Py_RETURN_NONE;
-  }
-  double xlat = 0, xlng = 0;
-  geo::GCJ2GPS(lat, lng, &xlat, &xlng);
-  PyObject* list = PyTuple_New(2);
-  PyTuple_SET_ITEM(list, 0, PyFloat_FromDouble(xlat));
-  PyTuple_SET_ITEM(list, 1, PyFloat_FromDouble(xlng));
-  return list;
-}
-
 //geometric 
 const long double _x_PI_ = 3.14159265358979324 * 3000.0 / 180.0;
 
-// lukaimin
+// kemey.RU
 static PyObject *PyBD092GCJ(PyObject *self, PyObject *args) {
   (void)self;
   double lat, lng;
@@ -307,8 +292,8 @@ static PyObject *PyGCJ2BD09(PyObject *self, PyObject *args) {
   PyTuple_SET_ITEM(list, 1, PyFloat_FromDouble(bd_lng));
   return list;
 }
-// lukaimin
 
+// kemey.RU
 static bool GetPointsFromArgsTuple3(PyObject *list, std::vector<DPoint> &points) {
   Py_ssize_t size = PyList_Size(list);
   for (int i = 0; i < size; ++i) {
@@ -631,7 +616,6 @@ static PyMethodDef kMethods[] = {
   {"EncodeArea",   PyEncodeLoop,      METH_VARARGS, "EncodeLoop((lat1, lng1), ...)"},
   {"Simplify",     PySimplify,        METH_VARARGS, "PySimplify((lat1, lng1), ...)"},
   {"GPS2GCJ",      PyGPS2GCJ,         METH_VARARGS, ""},
-  {"GCJ2GPS",      PyGCJ2GPS,         METH_VARARGS, ""},
   {"GCJ2BD09",     PyGCJ2BD09,        METH_VARARGS, "GCJ2BD09(gcj_lat, gcj_lng) -> (bd_lat, bd_lng)"},
   {"BD092GCJ",     PyBD092GCJ,        METH_VARARGS, "BD092GCJ(bd_lat, bd_lng) -> (gcj_lat, gcj_lng)"},
   {"IsMobile",     PyIsMobile,        METH_VARARGS|METH_KEYWORDS, ""},
