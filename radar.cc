@@ -185,7 +185,6 @@ int dbscan(std::vector<DPoint> &points, double dc, int minPts) {
                 }
             }
             // 划分核心节点和边缘节点
-            // don't follow the neighbors if Vi is halo
             points[i].is_core = false;
             if (points[i].samples - 1 > minPts || (int)candidates.size() > minPts) {
                 points[i].is_core = true;
@@ -209,9 +208,8 @@ int dbscan(std::vector<DPoint> &points, double dc, int minPts) {
                     }
                 }
             }
-            // printf("\n");
-        }// end for
-        // printf("C#%d: %lu\n", clazz, pending.size());
+        }
+        
         int pending_samples = 0;
         for(int i: pending) {
             points[i].cluster = clazz;
@@ -251,7 +249,6 @@ int dbscan(std::vector<DPoint> &points, double dc, int minPts) {
 }
 
 // wrap function for dbscan
-//
 int dbscan(std::vector<S2CellId> cells, std::vector<int>& cluster, double dc, int minPts) {
     std::vector<DPoint> points;
     for(auto cid: cells) {
@@ -397,7 +394,6 @@ void construct_density_map(DPointVec& points,
         neibors.clear();
         cover.GetCovering(cap, &neibors);
 
-        // std::cout<<std::hex<<it->first<<"\t"<<std::dec<<neibors.size()<<"\n";
         int count = it->second;
         for(auto c: neibors) {
             auto cnt_iter = counter.find(c);
@@ -457,7 +453,6 @@ int density_peak_filter_slow(DPointVec& points, double threshold, double dc) {
         double d = Distance(*pit, cent);
         pit->is_noise = d > threshold;
     }
-
     // printf("centroid: %.6f %.6f %g/%g c=%d d=%d n=%d\n", lat, lng, threshold, centroid, max_density, points.size());
     return points.size();
 }
@@ -469,7 +464,6 @@ int dpfilt(double *lat, double *lng, int n, double threshold, double dc) {
     }
     // printf("n = %d, t=%g/%g\n", n, threshold, dc);
     n = density_peak_filter(points, threshold, dc);
-    // printf("n = %d\n", n);
     for(int i = 0; i < n; ++ i) {
         lat[i] = points[i].lat;
         lng[i] = points[i].lng;
