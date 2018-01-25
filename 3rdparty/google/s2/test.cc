@@ -12,7 +12,7 @@ static inline double area(S2CellId sid)
 
 int main(int , char **argv)
 {
-    // lat,lng -> x,y,z -> f,u,v -> f,s,t -> cellid
+    //Build Sequence: lat,lng -> x,y,z -> f,u,v -> f,s,t -> cellid
     double lat = strtod(argv[1], NULL);
     double lng = strtod(argv[2], NULL);
     double level = strtoul(argv[3], NULL, 10);
