@@ -16,6 +16,17 @@
 #include <boost/geometry/geometries/linestring.hpp>
 #include <boost/geometry/geometries/point.hpp>
 
+static PyObject* PyIsPointInBox(PyObject* self, PyObject* args) {
+  (void)self;
+  double box_upleft_lat, box_upleft_lng, box_downright_lat, box_downright_lng, lat, lng;
+
+  if (!PyArg_ParseTuple(args, "dddddd", &box_upleft_lat, &box_upleft_lng, &box_downright_lat, &box_downright_lng, &lat, &lng)) {
+    Py_RETURN_NONE;
+  }
+  int result = geo::isInBox(box_upleft_lat, box_upleft_lng, box_downright_lat, box_downright_lng, lat, lng);
+  return PyInt_FromLong(result);
+}
+
 static PyObject* PyGetClosestLevel(PyObject* self, PyObject* args) {
   (void)self;
   double meters;
@@ -613,6 +624,7 @@ static PyMethodDef kMethods[] = {
   {"Prev",         PyPrevId,          METH_VARARGS, "Prev(id) -> next cell id in hillbert curve space"},
   {"Parent",       PyParentId,        METH_VARARGS, "Parent(id) -> parent id at level"},
   {"BoundBox",     PyBoundBox,        METH_VARARGS, "BBox((lat1, lng1), ...) -> lat_lo, lng_lo, lat_hi, lng_hi"},
+  {"IsPointInBox", PyIsPointInBox,    METH_VARARGS|METH_KEYWORDS, "IsPointInBox(box_upleft_lat,box_upleft_lng,box_downright_lat,box_downright_lng,lat,lng) -> 0/1\nIsPointInBox(39.98596,116.47112,39.9852,116.47277,39.9856,116.47192)"},
   {"EncodeArea",   PyEncodeLoop,      METH_VARARGS, "EncodeLoop((lat1, lng1), ...)"},
   {"Simplify",     PySimplify,        METH_VARARGS, "PySimplify((lat1, lng1), ...)"},
   {"GPS2GCJ",      PyGPS2GCJ,         METH_VARARGS, ""},
