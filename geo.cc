@@ -45,6 +45,22 @@ namespace geo {
     if (level) *level = sid.level();
   }
 
+  int isInBox(double box_upleft_lat, double box_upleft_lng, double box_downright_lat, double box_downright_lng, double lat, double lng){
+    int i, j = 3;  
+    int res = 0;  
+      
+    double poly_X[4]={box_upleft_lng, box_upleft_lng, box_downright_lng, box_downright_lng};
+    double poly_Y[4]={box_downright_lat, box_upleft_lat, box_upleft_lat, box_downright_lat};
+
+    for (i = 0; i<4; i++){  
+      if((poly_Y[i]<lat && poly_Y[j]>=lat || poly_Y[j]<lat && poly_Y[i]>=lat) && (poly_X[i]<=lng || poly_X[j]<=lng)){  
+        res ^= ((poly_X[i] + (lat-poly_Y[i])/(poly_Y[j]-poly_Y[i])*(poly_X[j]-poly_X[i])) < lng);  
+      }  
+      j=i;  
+    }  
+    return res;   
+  }
+
   // BMap.Projection.convertLL2MC(new BMap.Point(113.768261,23.036282))
   // => 12664762.69, 2619536
 
