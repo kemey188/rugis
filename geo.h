@@ -14,6 +14,7 @@ namespace geo {
   int DistanceOfId(u64 c1, u64 c2);
   bool LatLng2UTM(double lat, double lng, double &x, double &y);
   bool UTM2LatLng(double x, double y, double &lat, double &lng);
+  int isInBox(double box_upleft_lat, double box_upleft_lng, double box_downright_lat, double box_downright_lng, double lat, double lng);
 };
 
 #endif
